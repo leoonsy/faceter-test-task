@@ -48,6 +48,8 @@
     
     main {
         flex: 1 1 auto;
+        display: flex !important;
+        flex-direction: column;
     }
     
     footer {

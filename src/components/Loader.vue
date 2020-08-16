@@ -1,5 +1,5 @@
 <template>
-    <div class="text-center">
+    <div class="text-primary">
         <div class="spinner-border" role="status">
             <span class="sr-only">Loading...</span>
         </div>
@@ -11,3 +11,9 @@
         name: "Loader"
     }
 </script>
+<style lang="scss">
+    .spinner-border {
+        width: 60px;
+        height: 60px;
+    }
+</style>

@@ -1,24 +1,30 @@
 <template>
     <div class="planet">
         <h2 class="planet__header">
-            Имя планеты
+            {{ planet.name }}
         </h2>
         <div class="planet__characters characters">
-            <h3 class="characters__header">Характеристики</h3>
+            <h3 class="characters__header">Characters</h3>
             <ul class="characters__list">
-                <li class="characters__item"><strong>Имя: </strong><span>имя тут короч</span></li>
-                <li class="characters__item"><strong>Диаметр: </strong><span>1923</span></li>
-                <li class="characters__item"><strong>Климат: </strong><span>холодно</span></li>
-                <li class="characters__item"><strong>Популяция: </strong><span>не оч</span></li>
+                <li class="characters__item"><strong>Population: </strong><span>{{ planet.population }}</span></li>
+                <li class="characters__item"><strong>Climate: </strong><span>{{ planet.climate }}</span></li>
+                <li class="characters__item"><strong>Diameter: </strong><span>{{ planet.diameter }}</span></li>
             </ul>
+            <span class="characters__more">...</span>
         </div>
-        <button class="btn-reset planet__detail">Подробнее</button>
+        <button class="btn-reset planet__detail">Read more</button>
     </div>
 </template>
 
 <script>
     export default {
-        name: "Planet"
+        name: "Planet",
+        props: {
+            planet: {
+                type: Object,
+                required: true
+            }
+        }
     }
 </script>
 
@@ -71,7 +77,14 @@
             font-size: 1rem;
             display: flex;
             justify-content: space-between;
-            
+            span {
+                text-align: right;
+            }
+        }
+        
+        &__more {
+            text-align: center;
+            display: block;
         }
     }
 

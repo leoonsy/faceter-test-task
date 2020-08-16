@@ -13,6 +13,10 @@ class SWApi {
     async getPlanets(start = 1, limit = 10) {
         return this._getLimitedPaginatedPosts('planets', start, limit);
     }
+    
+    async getPlanetsCount() {
+        return (await HTTP.get(`planets/`)).data.count; 
+    }
 
     async _getLimitedPaginatedPosts(postsName, start = 1, limit = 10) {
         const { postsPerPage } = this;

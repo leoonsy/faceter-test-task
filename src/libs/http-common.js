@@ -10,14 +10,4 @@ const HTTP = axios.create({
     headers
 });
 
-HTTP.interceptors.request.use(config => {
-    store.commit('setLoading', true);
-    return config
-});
-
-HTTP.interceptors.response.use(response => {
-    store.commit('setLoading', false);
-    return response
-});
-
 export default HTTP;

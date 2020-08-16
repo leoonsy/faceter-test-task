@@ -5,7 +5,7 @@
                 <li v-for="link of links" :key="link.name" class="navbar__item">
                     <router-link
                             class="navbar__link"
-                            :class="{ active: link.name == $route.name }"
+                            :class="{ active: link.name === $route.name }"
                             :to="{name: link.name }">
                         {{ link.title }}
                     </router-link>
@@ -68,6 +68,12 @@
             &.active {
                 background-color: $active-link-color;
                 color: $link-active-color;
+            }
+        }
+        
+        .container {
+            @media (max-width: $menu-change-breakpoint) {
+                padding: 0;
             }
         }
     }
