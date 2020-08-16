@@ -2,34 +2,38 @@ import HTTP from './http-common';
 
 class SWApi {
     
-    constructor({objectsPerPage = 10} = {}) {
-        this.objectsPerPage = objectsPerPage;
+    constructor({ postsPerPage }) {
+        this.postsPerPage = postsPerPage;
     }
     
     async getPlanetById(id) {
         return (await HTTP.get(`planets/${id}`)).data;
     }
     
-    async _getLimitedPaginatedObjects(objectsName, start = 1, limit = 10) {
-        const { objectsPerPage } = this;
+    async getPlanets(start = 1, limit = 10) {
+        return this._getLimitedPaginatedPosts('planets', start, limit);
+    }
+
+    async _getLimitedPaginatedPosts(postsName, start = 1, limit = 10) {
+        const { postsPerPage } = this;
         const end = start + limit - 1;
-        const startPage = ((start - 1) / objectsPerPage | 0) + 1;
-        const endPage = ((end - 1) / objectsPerPage | 0) + 1;
+        const startPage = ((start - 1) / postsPerPage | 0) + 1;
+        const endPage = ((end - 1) / postsPerPage | 0) + 1;
         let hasErrorPage = false;
 
-        let objectsByPage = [];
+        let postsByPage = [];
 
         for (let pageNumber = startPage; pageNumber <= endPage; pageNumber++) {
             try {
-                const response = (await HTTP.get(`${objectsName}/?page=${pageNumber}`)).data;
-                const object = response.results;
+                const response = (await HTTP.get(`${postsName}/?page=${pageNumber}`)).data;
+                const post = response.results;
 
-                objectsByPage.push(object);
+                postsByPage.push(post);
 
                 if (!response.next) {
                     if (pageNumber < endPage)
                         hasErrorPage = true;
-                    break; 
+                    break;
                 }
             }
             catch {
@@ -37,19 +41,15 @@ class SWApi {
             }
         }
 
-        const objects = [].concat(...objectsByPage);
-        const startSkip = (start - 1) % objectsPerPage;
+        const posts = [].concat(...postsByPage);
+        const startSkip = (start - 1) % postsPerPage;
         let endSkip;
         if (hasErrorPage)
             endSkip = 0;
         else
-            endSkip = (objectsPerPage - end % objectsPerPage) % objectsPerPage;
+            endSkip = (postsPerPage - end % postsPerPage) % postsPerPage;
 
-        return objects.slice(startSkip, objects.length - endSkip);       
-    }
-    
-    async getPlanets(start = 1, limit = 10) {
-        return this._getLimitedPaginatedObjects('planets', start, limit);
+        return posts.slice(startSkip, posts.length - endSkip);
     }
 }
 

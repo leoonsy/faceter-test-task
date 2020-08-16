@@ -13,11 +13,11 @@
         name: 'App',
         computed: {
             ...mapGetters([
-                'loading',
+                'routeLoading',
             ])
         },
         watch: {
-            loading: function(newValue) {
+            routeLoading: function(newValue) {
                 if (newValue)
                     this.$Progress.start();
                 else

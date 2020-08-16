@@ -1,16 +1,17 @@
 <template>
     <nav class="navbar">
-        <ul class="navbar__list">
-            <li v-for="link of links" :key="link.name" class="navbar__item">
-                <router-link 
-                        class="navbar__link"
-                        :class="{ active: link.name == $route.name }"
-                        :to="{name: link.name }">
-                            {{ link.title }}
-                </router-link>
-            </li>
-        </ul>
-        <div class="hamburger"></div>
+        <div class="container">
+            <ul class="navbar__list">
+                <li v-for="link of links" :key="link.name" class="navbar__item">
+                    <router-link
+                            class="navbar__link"
+                            :class="{ active: link.name == $route.name }"
+                            :to="{name: link.name }">
+                        {{ link.title }}
+                    </router-link>
+                </li>
+            </ul>
+        </div>
     </nav>
 </template>
 

@@ -2,7 +2,6 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import SWApi from './libs/swapi';
 import "@/assets/styles/main.scss";
 import VueProgressBar from 'vue-progressbar'
 
@@ -22,9 +21,9 @@ new Vue({
 }).$mount('#app');
 
 (async () => {
-  const swApi = new SWApi();
-  const planets = await swApi.getPlanets(10, 2);
-  console.log(planets);
-  // const planet = await SWApi.getPlanetById(1);
-  // console.log(planet);
+  // const swApi = new SWApi();
+  // const planets = await swApi.getPlanets(1, 13);
+  // console.log(planets);
+  // // const planet = await SWApi.getPlanetById(1);
+  // // console.log(planet);
 })();

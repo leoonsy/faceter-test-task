@@ -1,19 +1,61 @@
 <template>
-  <section id="section-main">
-    <p>Root секция</p>
-    <p>Ссылки:</p>
-    <router-link :to="{ name: 'statistics' }">Статистика</router-link><br />
-    <router-link :to="{ name: 'error' }">Error секция</router-link>
-  </section>
+    <section class="planets">
+        <div class="container">
+            <div class="row">
+                <div class="col-3">
+                    <Planet class="planets__item"/>
+                </div>
+                <div class="col-3">
+                    <Planet class="planets__item"/>
+                </div>
+                <div class="col-3">
+                    <Planet class="planets__item"/>
+                </div>
+                <div class="col-3">
+                    <Planet class="planets__item"/>
+                </div>
+                <div class="col-3">
+                    <Planet class="planets__item"/>
+                </div>
+            </div>
+        </div>
+    </section>
 </template>
 
 <script>
-export default {
-  name: "Root",
-};
+    import Planet from "@/components/Planet";
+    import { mapActions } from 'vuex'
+    import Loader from "@/components/Loader";
+
+    export default {
+        name: "Root",
+        data: () => ({
+           loading: true 
+        }),
+        async created() {
+          try {
+              const planets = await this.getPlanets({
+                  start: 1,
+                  limit: 10
+              });
+              console.log(planets);
+          }  
+          catch {}
+        },
+        components: { Planet },
+        methods: {
+            ...mapActions([
+                'getPlanets'
+            ])
+        }
+    };
 </script>
 <style lang="scss">
-#section-main {
+    .planets {
+        margin-top: 40px;
 
-}
+        &__item {
+            margin: 30px 0 0 0;
+        }
+    }
 </style>

@@ -48,12 +48,12 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    store.commit('setLoading', true);
+    store.commit('setRouteLoading', true);
     next();
 });
 
 router.afterEach((to, from) => {
-    store.commit('setLoading', false);
+    store.commit('setRouteLoading', false);
 });
 
 export default router;

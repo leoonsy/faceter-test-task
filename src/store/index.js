@@ -4,22 +4,37 @@ import planets from './planets';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {
-    loading: false,
-    error: false,
+const state = {
+  routeLoading: false,
+  error: false,
+};
+
+const mutations = {
+  setRouteLoading(state, bool) {
+    state.routeLoading = bool;
   },
-  mutations: {
-    setLoading(state, bool) {
-      state.loading = bool;
-    }
-  },
-  actions: {
-  },
-  getters: {
-    loading: s => s.loading
-  },
-  modules: {
-    planets
+  
+  setError(state, error) {
+    state.error = error;  
   }
+};
+
+const actions = {
+  
+};
+
+const getters = {
+  routeLoading: s => s.routeLoading
+};
+
+const modules = {
+  planets
+};
+
+export default new Vuex.Store({
+  state,
+  mutations,
+  actions,
+  getters,
+  modules
 });

@@ -21,11 +21,11 @@
             links: [
                 {
                     name: 'planets',
-                    title: 'Планеты'
+                    title: 'Planets'
                 },
                 {
                     name: 'statistics',
-                    title: 'Статистика'
+                    title: 'Statistics'
                 }
             ]
         }),

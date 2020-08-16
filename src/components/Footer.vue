@@ -1,6 +1,6 @@
 <template>
     <div class="footer">
-        <h3 class="footer__text">Тестовое задание для компании Faceter. Реализация: Сергей Яшановский.</h3>
+        <h3 class="footer__text">Test task for Faceter company. Implementation: Sergey Yashanovsky.</h3>
     </div>
 </template>
 
