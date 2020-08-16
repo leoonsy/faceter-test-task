@@ -1,29 +1,59 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import EmptyLayout from '@/layouts/EmptyLayout';
+import MainLayout from '@/layouts/MainLayout';
+import store from '@/store';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-  const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
+const routes = [
+    {
+        path: '/',
+        name: 'planets',
+        component: () => import(/* webpackChunkName: "planets" */ '@/views/Planets.vue'),
+        meta: {
+            layout: MainLayout
+        }
+    },
+    {
+        path: '/statistics',
+        name: 'statistics',
+        component: () => import(/* webpackChunkName: "statistics" */ '@/views/Statistics.vue'),
+        meta: {
+            layout: MainLayout
+        }
+    },
+    {
+        path: '/error',
+        name: 'error',
+        component: () => import(/* webpackChunkName: "error" */ '@/views/Error.vue'),
+        meta: {
+            layout: MainLayout
+        }
+    },
+    {
+        path: '*',
+        name: '404',
+        meta: {
+            layout: EmptyLayout        
+        },
+        redirect: 'error'
+    },
+];
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
-})
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+    store.commit('setLoading', true);
+    next();
+});
+
+router.afterEach((to, from) => {
+    store.commit('setLoading', false);
+});
+
+export default router;
