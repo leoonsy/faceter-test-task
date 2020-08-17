@@ -1,13 +1,18 @@
 import SWApi from '@/libs/swapi';
 
-const api = new SWApi({
-    postsPerPage: process.env.VUE_APP_POST_PER_PAGE
-});
-
 const actions = {
-    async getPlanets({ commit }, { start, limit }) {
+    async getPlanetsInfo({ commit }) {
         try {
-           return await api.getPlanets(start, limit);
+            return await SWApi.getPlanetsInfo();
+        } catch (e) {
+            commit('setError', true);
+            throw e;
+        }
+    },
+    
+    async getPlanets({ commit }, { start, limit, planetsPerPage }) {
+        try {
+           return await SWApi.getPlanets(start, limit, planetsPerPage);
         }
         catch (e) {
             commit('setError', true);
@@ -15,15 +20,14 @@ const actions = {
         }
     },
 
-    async getPlanetsCount({ commit }) {
+    async getPlanetById({ commit }, id) {
         try {
-            return await api.getPlanetsCount();
-        }
-        catch (e) {
+            return await SWApi.getPlanetById(id);
+        } catch (e) {
             commit('setError', true);
             throw e;
         }
-    }
+    },
 };
 
 

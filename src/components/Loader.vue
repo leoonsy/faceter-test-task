@@ -11,7 +11,7 @@
         name: "Loader"
     }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
     .spinner-border {
         width: 60px;
         height: 60px;

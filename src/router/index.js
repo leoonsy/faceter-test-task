@@ -9,8 +9,21 @@ Vue.use(VueRouter);
 const routes = [
     {
         path: '/',
+        name: 'root',
+        redirect: 'planets'
+    },
+    {
+        path: '/planets',
         name: 'planets',
         component: () => import(/* webpackChunkName: "planets" */ '@/views/Planets.vue'),
+        meta: {
+            layout: MainLayout
+        }
+    },
+    {
+        path: '/planets/:id',
+        name: 'planet',
+        component: () => import(/* webpackChunkName: "planet" */ '@/views/Planet.vue'),
         meta: {
             layout: MainLayout
         }

@@ -1,25 +1,25 @@
 import HTTP from './http-common';
 
 class SWApi {
-    
-    constructor({ postsPerPage }) {
-        this.postsPerPage = postsPerPage;
-    }
-    
-    async getPlanetById(id) {
+    static async getPlanetById(id) {
         return (await HTTP.get(`planets/${id}`)).data;
     }
-    
-    async getPlanets(start = 1, limit = 10) {
-        return this._getLimitedPaginatedPosts('planets', start, limit);
-    }
-    
-    async getPlanetsCount() {
-        return (await HTTP.get(`planets/`)).data.count; 
+
+    static async getPlanets(start, limit, planetsPerPage) {
+        return this._getLimitedPaginatedPosts({
+            postsName: 'planets',
+            postsPerPage: planetsPerPage,
+            start,
+            limit
+        });
     }
 
-    async _getLimitedPaginatedPosts(postsName, start = 1, limit = 10) {
-        const { postsPerPage } = this;
+    static async getPlanetsInfo() {
+        const planetsInfo = (await HTTP.get(`planets/`)).data;
+        return [planetsInfo.count, planetsInfo.results.length];
+    }
+
+    static async _getLimitedPaginatedPosts({ postsName, postsPerPage, start, limit }) {
         const end = start + limit - 1;
         const startPage = ((start - 1) / postsPerPage | 0) + 1;
         const endPage = ((end - 1) / postsPerPage | 0) + 1;
@@ -39,8 +39,7 @@ class SWApi {
                         hasErrorPage = true;
                     break;
                 }
-            }
-            catch {
+            } catch {
                 hasErrorPage = true;
             }
         }

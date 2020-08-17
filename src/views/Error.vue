@@ -12,13 +12,13 @@ export default {
   computed: {
     message() {
       let results = {
-        "403": "Ошибка доступа",
-        "404": "Данной страницы не существует",
-        "500": "Внутренняя ошибка сервера"
+        "403": "Access error",
+        "404": "Page not found",
+        "500": "Internal server error"
       };
 
       let code = this.$route.params.code;
-      if (!code || !results.hasOwnProperty(code))
+      if (!code || !results.[code])
         return results['404'];
 
       return results[code];
@@ -27,7 +27,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .error {
   height: 100vh;
   display: flex;

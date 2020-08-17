@@ -5,8 +5,10 @@
                 <li v-for="link of links" :key="link.name" class="navbar__item">
                     <router-link
                             class="navbar__link"
-                            :class="{ active: link.name === $route.name }"
-                            :to="{name: link.name }">
+                            active-class="active"
+                            :to="{name: link.name }"
+                            :exact="link.exact === true"
+                    >
                         {{ link.title }}
                     </router-link>
                 </li>
@@ -35,7 +37,7 @@
     $link-color: #fff;
     $link-hover-color: #000;
     $link-active-color: #fff;
-    
+
     .navbar {
         background-color: $menu-bg;
         overflow: hidden;
@@ -48,7 +50,7 @@
             list-style: none;
             display: flex;
             margin: 0;
-            
+
             @media (max-width: $menu-change-breakpoint) {
                 flex-direction: column;
                 width: 100%;
@@ -70,7 +72,7 @@
                 color: $link-active-color;
             }
         }
-        
+
         .container {
             @media (max-width: $menu-change-breakpoint) {
                 padding: 0;

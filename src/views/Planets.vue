@@ -6,8 +6,7 @@
                 <span class="settings__page-text">Number of planets per page:</span>
                 <input class="settings__page-size" :class="{ error: errors.pageSize }" type="number"
                        v-model.lazy.number="pageSize"/>
-                <p v-if="errors.pageSize" class="settings__error-info">Поле должно быть натуральным числом, не
-                    превышающем {{ planetsCount }}.</p>
+                <p v-if="errors.pageSize" class="settings__error-info">The field must be natural, not exceeding {{ planetsCount }}.</p>
             </div>
             <div class="row">
                 <div class="col-xl-3 col-lg-4 col-sm-6 col-12" v-for="planet of planets">
@@ -25,8 +24,10 @@
                             :container-class="'pagination pagination-lg'"
                             :page-class="'page-item'"
                             :page-link-class="'page-link'"
-                            :prev-class="'page-link'"
-                            :next-class="'page-link'"
+                            :prev-class="'page-item'"
+                            :next-class="'page-item'"
+                            :next-link-class="'page-link'"
+                            :prev-link-class="'page-link'"
                     >
                     </Paginate>
                 </div>
@@ -42,19 +43,19 @@
     import Loader from "@/components/Loader";
 
     export default {
-        name: "Root",
+        name: "Planets",
         components: {Loader, Planet, Paginate},
         data() {
             return {
                 loading: true,
                 planets: [],
-                planetsCount: 0,
+                planetsCount: null,
                 page: +this.$route.query.page || 1,
                 pageSize: +localStorage.getItem('pageSize') || 5,
                 errors: {
                     pageSize: false
                 },
-                pageCount: null
+                pageCount: 0
             };
         },
         async created() {
@@ -71,25 +72,27 @@
 
                 this.errors.pageSize = !(/^\d+$/.test(newVal) && +newVal > 0 && +newVal <= this.planetsCount);
                 if (!this.errors.pageSize) {
-                    localStorage.setItem('pageSize', this.pageSize);
+                    localStorage.setItem('pageSize', this.pageSize.toString());
                     await this.setupPlanets();
                 }
             }
         },
         methods: {
             ...mapActions([
-                'getPlanets', 'getPlanetsCount'
+                'getPlanets', 'getPlanetsInfo'
             ]),
             async setupPlanets() {
                 this.loading = true;
                 try {
-                    this.planetsCount = await this.getPlanetsCount();
+                    let planetsPerPage;
+                    [this.planetsCount, planetsPerPage] = await this.getPlanetsInfo();
                     this.pageCount = Math.ceil(this.planetsCount / this.pageSize);
                     const start = (this.page - 1) * this.pageSize + 1;
 
                     this.planets = await this.getPlanets({
                         start,
-                        limit: this.pageSize
+                        limit: this.pageSize,
+                        planetsPerPage
                     });
                 } catch {
                 }
@@ -98,10 +101,12 @@
             changePageHandler(page) {
                 this.$router.push(`${this.$route.path}?page=${page}`);
             },
-        }
+        },
     };
 </script>
 <style lang="scss" scoped>
+    $error: red;
+    
     .planets {
         margin: 40px 0;
         position: relative;
@@ -147,12 +152,12 @@
             text-align: center;
 
             &.error {
-                border-color: red;
+                border-color: $error;
             }
         }
 
         &__error-info {
-            color: red;
+            color: $error;
             margin-top: 7px;
         }
     }
