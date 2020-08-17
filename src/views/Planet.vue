@@ -1,7 +1,7 @@
 <template>
     <section class="planet">
         <Loader v-if="loading" class="planet__loader"/>
-        <div v-else class="container">
+        <div v-else-if="planet" class="container">
             <div class="planet__name">
                 {{ planet.name }}
             </div>
@@ -33,6 +33,9 @@
                 </li>
             </ul>
         </div>
+        <div v-else class="planet__not-found">
+            <h3>Not found.</h3>
+        </div>
     </section>
 </template>
 
@@ -46,14 +49,13 @@
         data() {
             return {
                 loading: true,
-                planet: {},
+                planet: null,
             };
         },
         async created() {
             try {
                 this.planet = await this.getPlanetById(this.$route.params.id);
-            } catch {
-            }
+            } catch (e) { }
 
             this.loading = false;
         },
@@ -89,7 +91,7 @@
         &__characters {
             padding: 15px;
             font-size: 1.3rem;
-            background: #408cff;
+            background: $primary;
             color: #fff;
         }
 
@@ -116,6 +118,22 @@
             &:nth-child(even) {
                 background-color: #ffffff;
             }
+        }
+        
+        &__not-found {
+            height: 100%;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            @media (max-width: 450px) {
+                max-width: 100%;
+                padding: 0;
+            }
+            
         }
     }
 </style>

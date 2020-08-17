@@ -19,12 +19,9 @@ const mutations = {
   }
 };
 
-const actions = {
-  
-};
-
 const getters = {
-  routeLoading: s => s.routeLoading
+  routeLoading: s => s.routeLoading,
+  error: s => s.error
 };
 
 const modules = {
@@ -34,7 +31,6 @@ const modules = {
 export default new Vuex.Store({
   state,
   mutations,
-  actions,
   getters,
   modules
 });

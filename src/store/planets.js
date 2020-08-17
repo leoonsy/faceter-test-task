@@ -5,17 +5,17 @@ const actions = {
         try {
             return await SWApi.getPlanetsInfo();
         } catch (e) {
-            commit('setError', true);
+            commit('setError', e);
             throw e;
         }
     },
     
-    async getPlanets({ commit }, { start, limit, planetsPerPage }) {
+    async getPlanets({ commit }, { planetsPerPage, planetsCount, startPlanet, limit }) {
         try {
-           return await SWApi.getPlanets(start, limit, planetsPerPage);
+           return await SWApi.getPlanets(planetsPerPage, planetsCount, startPlanet, limit);
         }
         catch (e) {
-            commit('setError', true);
+            commit('setError', e);
             throw e; 
         }
     },
@@ -24,7 +24,16 @@ const actions = {
         try {
             return await SWApi.getPlanetById(id);
         } catch (e) {
-            commit('setError', true);
+            commit('setError', e);
+            throw e;
+        }
+    },
+
+    async getStatistics({ commit }) {
+        try {
+            return await SWApi.getStatistics();
+        } catch (e) {
+            commit('setError', e);
             throw e;
         }
     },

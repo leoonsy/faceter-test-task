@@ -29,12 +29,12 @@ export default {
 
 <style lang="scss" scoped>
 .error {
-  height: 100vh;
+  height: 100%;
   display: flex;
   align-items: center;
+  text-align: center;
   
   &__text {
-    text-align: center;
     font-size: 2rem;
   }
 }

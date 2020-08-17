@@ -39,7 +39,7 @@
         &__name {
             text-align: center;
             font-size: 1.6rem;
-            background: #008fff;
+            background: $primary;
             color: #fff;
             padding: 20px;
         }

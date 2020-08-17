@@ -3,7 +3,10 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import "@/assets/styles/main.scss";
-import VueProgressBar from 'vue-progressbar'
+import VueProgressBar from 'vue-progressbar';
+import Toasted from 'vue-toasted';
+
+Vue.use(Toasted);
 
 Vue.use(VueProgressBar, {
   color: 'rgb(53,120,255)',
@@ -19,11 +22,3 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app');
-
-(async () => {
-  // const swApi = new SWApi();
-  // const planets = await swApi.getPlanets(1, 13);
-  // console.log(planets);
-  // // const planet = await SWApi.getPlanetById(1);
-  // // console.log(planet);
-})();

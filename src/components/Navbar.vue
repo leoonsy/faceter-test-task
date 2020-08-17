@@ -32,7 +32,7 @@
 <style lang="scss" scoped>
     $menu-bg: #333;
     $hover-link-color: #c4c4c4;
-    $active-link-color: #075dfa;
+    $active-link-color: $primary;
     $menu-change-breakpoint: 400px;
     $link-color: #fff;
     $link-hover-color: #000;

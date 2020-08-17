@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import EmptyLayout from '@/layouts/EmptyLayout';
 import MainLayout from '@/layouts/MainLayout';
 import store from '@/store';
 
@@ -48,7 +47,7 @@ const routes = [
         path: '*',
         name: '404',
         meta: {
-            layout: EmptyLayout        
+            layout: MainLayout        
         },
         redirect: 'error'
     },

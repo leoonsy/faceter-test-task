@@ -1,7 +1,7 @@
 <template>
     <section class="planets">
         <Loader v-if="loading" class="planets__loader"/>
-        <div v-else class="container">
+        <div v-else-if="planets.length" class="container">
             <div class="planets__settings settings">
                 <span class="settings__page-text">Number of planets per page:</span>
                 <input class="settings__page-size" :class="{ error: errors.pageSize }" type="number"
@@ -32,6 +32,9 @@
                     </Paginate>
                 </div>
             </div>
+        </div>
+        <div v-else class="planets__not-found">
+            <h3>Planets not found</h3>
         </div>
     </section>
 </template>
@@ -84,15 +87,16 @@
             async setupPlanets() {
                 this.loading = true;
                 try {
-                    let planetsPerPage;
-                    [this.planetsCount, planetsPerPage] = await this.getPlanetsInfo();
+                    const [planetsCount, planetsPerPage] = await this.getPlanetsInfo();
+                    this.planetsCount = planetsCount;
                     this.pageCount = Math.ceil(this.planetsCount / this.pageSize);
-                    const start = (this.page - 1) * this.pageSize + 1;
+                    const startPlanet = (this.page - 1) * this.pageSize + 1;
 
                     this.planets = await this.getPlanets({
-                        start,
+                        planetsPerPage,
+                        planetsCount,
+                        startPlanet,
                         limit: this.pageSize,
-                        planetsPerPage
                     });
                 } catch {
                 }
@@ -121,6 +125,14 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
+        }
+
+        &__not-found {
+            height: 100%;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .container {

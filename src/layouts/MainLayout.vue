@@ -32,6 +32,20 @@
         components: {
             NavBar,
             Footer
+        },
+        computed: {
+            error() {
+                return this.$store.getters.error;
+            },
+        },
+        watch: {
+            error(e) {
+                this.$toasted.show("An error has occurred", {
+                    theme: "toasted-primary",
+                    position: "top-right",
+                    duration : 5000
+                });
+            }
         }
     };
 </script>
