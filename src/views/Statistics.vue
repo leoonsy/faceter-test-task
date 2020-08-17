@@ -1,12 +1,12 @@
 <template>
   <section class="statistics">
-    <Loader v-if="loading" class="statistics__loader"/>
+    <Loader v-if="loading" class="statistics__loader" />
     <div v-else class="container">
       <div class="statistics__header">
         Total count of Star Wars objects:
       </div>
       <ul class="statistics__list">
-        <li class="statistics__item" v-for="statistic of statistics">
+        <li v-for="statistic of statistics" class="statistics__item">
           <div class="statistics__name">{{ statistic.name }}:</div>
           <div class="statistics__count">{{ statistic.count }}</div>
         </li>
@@ -16,12 +16,12 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import { mapActions } from "vuex";
 import Loader from "@/components/Loader";
 
 export default {
   name: "Statistics",
-  components: {Loader},
+  components: { Loader },
   data: () => ({
     statistics: [],
     loading: true
@@ -29,59 +29,56 @@ export default {
   async created() {
     try {
       this.statistics = await this.getStatistics();
-    }
-    catch {}
-    
+    } catch {}
+
     this.loading = false;
   },
   methods: {
-    ...mapActions([
-      'getStatistics'
-    ]),
+    ...mapActions(["getStatistics"])
   }
 };
 </script>
 
 <style lang="scss">
-  .statistics {
-    padding: 30px 0;
-    height: 100%;
-    position: relative;
+.statistics {
+  padding: 30px 0;
+  height: 100%;
+  position: relative;
 
-    &__loader {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-    
-    &__header {
-      font-size: 1.5rem;
-      text-align: center;
-    }
-    
-    &__list {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 30px 0;
-    }
-    
-    &__item {
-      display: flex;
-      margin: 15px;
-    }
-    
-    &__name {
-      padding: 10px 15px;
-      background-color: $primary;
-      color: #fff;
-    }
-    
-    &__count {
-      padding: 10px 15px;
-      background-color: #d7d7d7;
-    }
+  &__loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
+
+  &__header {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 30px 0;
+  }
+
+  &__item {
+    display: flex;
+    margin: 15px;
+  }
+
+  &__name {
+    padding: 10px 15px;
+    background-color: $primary;
+    color: #fff;
+  }
+
+  &__count {
+    padding: 10px 15px;
+    background-color: #d7d7d7;
+  }
+}
 </style>

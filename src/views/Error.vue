@@ -33,10 +33,9 @@ export default {
   display: flex;
   align-items: center;
   text-align: center;
-  
+
   &__text {
     font-size: 2rem;
   }
 }
-  
 </style>

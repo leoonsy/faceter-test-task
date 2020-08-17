@@ -1,21 +1,21 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import planets from './planets';
+import Vue from "vue";
+import Vuex from "vuex";
+import planets from "./planets";
 
 Vue.use(Vuex);
 
 const state = {
   routeLoading: false,
-  error: false,
+  error: false
 };
 
 const mutations = {
   setRouteLoading(state, bool) {
     state.routeLoading = bool;
   },
-  
+
   setError(state, error) {
-    state.error = error;  
+    state.error = error;
   }
 };
 
