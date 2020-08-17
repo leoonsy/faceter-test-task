@@ -3,8 +3,11 @@
     <Loader v-if="loading" class="planets__loader" />
     <div v-else-if="planets.length" class="container">
       <div class="planets__settings settings">
-        <span class="settings__page-text">Number of planets per page:</span>
+        <label for="page-size" class="settings__page-text"
+          >Number of planets per page:</label
+        >
         <input
+          id="page-size"
           class="settings__page-size"
           :class="{ error: errors.pageSize }"
           type="number"
@@ -18,6 +21,7 @@
         <div
           class="col-xl-3 col-lg-4 col-sm-6 col-12"
           v-for="planet of planets"
+          :key="planet.name"
         >
           <Planet class="planets__item" :planet="planet" />
         </div>

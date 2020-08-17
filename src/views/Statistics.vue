@@ -6,7 +6,11 @@
         Total count of Star Wars objects:
       </div>
       <ul class="statistics__list">
-        <li v-for="statistic of statistics" class="statistics__item">
+        <li
+          v-for="statistic of statistics"
+          :key="statistic.name"
+          class="statistics__item"
+        >
           <div class="statistics__name">{{ statistic.name }}:</div>
           <div class="statistics__count">{{ statistic.count }}</div>
         </li>

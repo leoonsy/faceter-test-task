@@ -39,7 +39,7 @@ export default {
     }
   },
   watch: {
-    error(e) {
+    error() {
       this.$toasted.show("An error has occurred", {
         theme: "toasted-primary",
         position: "top-right",
