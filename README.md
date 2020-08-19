@@ -1,19 +1,18 @@
-# vue-hh
+Тестовое задание в компанию Faceter на позицию стажера
+=============================
+Vue.js + Typescript + ESLint + Bootstrap grid
 
-## Project setup
+## Установка проекта
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Компиляция в режиме разработки
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Компиляция и минификация
 ```
 npm run build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
