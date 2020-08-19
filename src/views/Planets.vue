@@ -162,7 +162,7 @@ $error: red;
 .planets {
   margin: 40px 0;
   position: relative;
-  height: 100%;
+  flex: 1 0 100%;
 
   &__item {
     margin: 30px 0 0 0;
@@ -237,11 +237,21 @@ $error: red;
     }
 
     @media (max-width: 450px) {
-      padding: 0.55rem 0.8rem;
+      padding: 0.6rem 0.9rem;
       font-size: 1rem;
     }
 
-    @media (max-width: 330px) {
+    @media (max-width: 340px) {
+      padding: 0.4rem 0.7rem;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 295px) {
+      padding: 0.3rem 0.55rem;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 255px) {
       padding: 0.3rem 0.45rem;
       font-size: 1rem;
     }

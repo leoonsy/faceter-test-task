@@ -58,7 +58,7 @@ export default class Statistics extends Vue {
 <style lang="scss">
 .statistics {
   padding: 30px 0;
-  height: 100%;
+  flex: 1 0 100%;
   position: relative;
 
   &__loader {

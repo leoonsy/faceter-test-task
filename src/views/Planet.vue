@@ -28,7 +28,7 @@
           <strong>Gravity: </strong><span>{{ planet.gravity }}</span>
         </li>
         <li class="planet__item">
-          <strong>terrain : </strong><span>{{ planet.terrain }}</span>
+          <strong>terrain: </strong><span>{{ planet.terrain }}</span>
         </li>
         <li class="planet__item">
           <strong>Surface water : </strong
@@ -78,7 +78,8 @@ export default class Planet extends Vue {
 <style lang="scss" scoped>
 .planet {
   margin: 40px 0;
-  height: 100%;
+  flex: 1 0 100%;
+  position: relative;
   text-align: center;
 
   &__name {

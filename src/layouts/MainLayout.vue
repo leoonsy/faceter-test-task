@@ -50,15 +50,15 @@ export default class MainLayout extends Vue {
 .wrapper {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100%;
 }
 
 header {
-  flex: 0 1 auto;
+  flex: 0 0 auto;
 }
 
 main {
-  flex: 1 1 auto;
+  flex: 1 0 auto;
   display: flex !important;
   flex-direction: column;
 }
