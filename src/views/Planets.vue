@@ -60,8 +60,7 @@ import { Vue, Component, Watch } from "vue-property-decorator";
 import { Action } from "vuex-class";
 // eslint-disable-next-line no-unused-vars
 import { IGetPlanetsSettings, IPlanet } from "@/api/types";
-// eslint-disable-next-line no-unused-vars
-import { NavigationGuardNext, Route } from "vue-router";
+import { Route } from "vue-router";
 
 @Component({
   components: {
@@ -69,47 +68,39 @@ import { NavigationGuardNext, Route } from "vue-router";
     Planet,
     Paginate
   },
-  beforeRouteUpdate(
-    this: Planets,
-    to: Route,
-    from: Route,
-    next: NavigationGuardNext
-  ) {
+  beforeRouteUpdate(this: Planets, to: Route, _from: any, next: any) {
+    this.setupPage(to);
     this.setupPlanets();
+
     next();
   }
 })
 export default class Planets extends Vue {
   loading = true;
   planets: IPlanet[] = [];
-  planetsCount = 0;
-  page = 1;
+  planetsCount!: number;
+  page!: number;
   pageSize: string | number = localStorage.getItem("pageSize") || 5;
   errors = {
     pageSize: false
   };
-  pageCount = 0;
+  pageCount!: number;
 
   created() {
-    this.setupInitialPage();
+    this.setupPage(this.$route);
     this.setupPlanets();
   }
 
-  setupInitialPage() {
-    const routePage = this.$route.query.page;
-    if (routePage) {
-      if (
-        !(
-          typeof this.$route.query.page === "string" &&
-          /^\d+$/.test(this.$route.query.page)
-        )
-      ) {
+  setupPage(nextRoute: Route) {
+    const nextRoutePage = nextRoute.query.page;
+    if (nextRoutePage) {
+      if (!(typeof nextRoutePage === "string" && /^\d+$/.test(nextRoutePage))) {
         this.$router.push({ name: "error" });
         return;
       }
 
-      this.page = +routePage;
-    }
+      this.page = +nextRoutePage;
+    } else this.page = 1;
   }
 
   async setupPlanets() {

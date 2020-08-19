@@ -63,7 +63,7 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((_to, _from, next) => {
   store.commit("setRouteLoading", true);
   next();
 });

@@ -6,20 +6,19 @@
     </component>
   </div>
 </template>
-<script>
-import { mapState } from "vuex";
+<script lang="ts">
+import { Vue, Component, Watch } from "vue-property-decorator";
+import { State } from "vuex-class";
+@Component
+export default class App extends Vue {
+  @State(state => state.info.routeLoading) routeLoading!: boolean;
+  $Progress: any;
 
-export default {
-  name: "App",
-  computed: {
-    ...mapState(["routeLoading"])
-  },
-  watch: {
-    routeLoading: function(newValue) {
-      if (newValue) this.$Progress.start();
-      else this.$Progress.finish();
-    }
+  @Watch("routeLoading")
+  onRouteLoading(newValue: boolean) {
+    if (newValue) this.$Progress.start();
+    else this.$Progress.finish();
   }
-};
+}
 </script>
 <style lang="scss"></style>

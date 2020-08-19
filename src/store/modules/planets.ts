@@ -1,5 +1,6 @@
-import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
+import { Module, VuexModule, Action } from "vuex-module-decorators";
 import SWApi from "@/api/swapi";
+// eslint-disable-next-line no-unused-vars
 import { IGetPlanetsSettings } from "@/api/types";
 
 @Module

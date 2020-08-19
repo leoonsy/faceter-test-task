@@ -19,7 +19,8 @@ module.exports = {
       {
         allowEmptyCatch: true
       }
-    ]
+    ],
+    "no-unused-vars": "warn"
   },
 
   extends: [
