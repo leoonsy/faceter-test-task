@@ -29,7 +29,7 @@ export default class Info extends VuexModule {
       return await SWApi.getPlanetById(id);
     } catch (e) {
       if (e.response && e.response.status === 404) {
-        return [];
+        return null;
       }
       this.context.commit("setError", e);
       throw e;

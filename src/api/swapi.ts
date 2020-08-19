@@ -1,12 +1,12 @@
 import HTTP from "../libs/http-common";
-import { IGetPlanetsSettings, IPlanet, IPlanets, IStatistics } from "./types";
+import { IGetPlanetsSettings, IPlanet, IStatistics } from "./types";
 
 class SWApi {
-  static async getPlanetById(id: number) {
+  public static async getPlanetById(id: number) {
     return (await HTTP.get(`planets/${id}`)).data as IPlanet;
   }
 
-  static async getPlanets({
+  public static async getPlanets({
     planetsPerPage,
     planetsCount,
     startPlanet,
@@ -18,15 +18,15 @@ class SWApi {
       planetsCount,
       startPlanet,
       limit
-    )) as IPlanets;
+    )) as IPlanet[];
   }
 
-  static async getPlanetsInfo(): Promise<[number, number]> {
+  public static async getPlanetsInfo(): Promise<[number, number]> {
     const planetsInfo = (await HTTP.get("planets/")).data;
     return [planetsInfo.count, planetsInfo.results.length];
   }
 
-  static async getStatistics() {
+  public static async getStatistics() {
     const rootPosts = (await HTTP.get("")).data;
     const postNames = Object.keys(rootPosts);
     let statistics: IStatistics = new Array(postNames.length);
@@ -52,7 +52,7 @@ class SWApi {
     return statistics;
   }
 
-  static async _getLimitedPaginatedPosts(
+  private static async _getLimitedPaginatedPosts(
     postsName: string,
     postsPerPage: number,
     postsCount: number,

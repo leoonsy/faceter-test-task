@@ -52,74 +52,109 @@
   </section>
 </template>
 
-<script>
-import Planet from "@/components/Planet";
-import { mapActions } from "vuex";
+<script lang="ts">
+import Planet from "@/components/Planet.vue";
 import Paginate from "vuejs-paginate";
-import Loader from "@/components/Loader";
+import Loader from "@/components/Loader.vue";
+import { Vue, Component, Watch } from "vue-property-decorator";
+import { Action } from "vuex-class";
+// eslint-disable-next-line no-unused-vars
+import { IGetPlanetsSettings, IPlanet } from "@/api/types";
+// eslint-disable-next-line no-unused-vars
+import { NavigationGuardNext, Route } from "vue-router";
 
-export default {
-  name: "Planets",
-  components: { Loader, Planet, Paginate },
-  data() {
-    return {
-      loading: true,
-      planets: [],
-      planetsCount: null,
-      page: +this.$route.query.page || 1,
-      pageSize: +localStorage.getItem("pageSize") || 5,
-      errors: {
-        pageSize: false
-      },
-      pageCount: 0
-    };
+@Component({
+  components: {
+    Loader,
+    Planet,
+    Paginate
   },
-  async created() {
-    await this.setupPlanets();
-  },
-  beforeRouteUpdate(to, from, next) {
+  beforeRouteUpdate(
+    this: Planets,
+    to: Route,
+    from: Route,
+    next: NavigationGuardNext
+  ) {
     this.setupPlanets();
     next();
-  },
-  watch: {
-    async pageSize(newVal, oldValue) {
-      if (oldValue === newVal) return;
+  }
+})
+export default class Planets extends Vue {
+  loading = true;
+  planets: IPlanet[] = [];
+  planetsCount = 0;
+  page = 1;
+  pageSize: string | number = localStorage.getItem("pageSize") || 5;
+  errors = {
+    pageSize: false
+  };
+  pageCount = 0;
 
-      this.errors.pageSize = !(
-        /^\d+$/.test(newVal) &&
-        +newVal > 0 &&
-        +newVal <= this.planetsCount
-      );
-      if (!this.errors.pageSize) {
-        localStorage.setItem("pageSize", this.pageSize.toString());
-        await this.setupPlanets();
+  created() {
+    this.setupInitialPage();
+    this.setupPlanets();
+  }
+
+  setupInitialPage() {
+    const routePage = this.$route.query.page;
+    if (routePage) {
+      if (
+        !(
+          typeof this.$route.query.page === "string" &&
+          /^\d+$/.test(this.$route.query.page)
+        )
+      ) {
+        this.$router.push({ name: "error" });
+        return;
       }
-    }
-  },
-  methods: {
-    ...mapActions(["getPlanets", "getPlanetsInfo"]),
-    async setupPlanets() {
-      this.loading = true;
-      try {
-        const [planetsCount, planetsPerPage] = await this.getPlanetsInfo();
-        this.planetsCount = planetsCount;
-        this.pageCount = Math.ceil(this.planetsCount / this.pageSize);
-        const startPlanet = (this.page - 1) * this.pageSize + 1;
 
-        this.planets = await this.getPlanets({
-          planetsPerPage,
-          planetsCount,
-          startPlanet,
-          limit: this.pageSize
-        });
-      } catch {}
-      this.loading = false;
-    },
-    changePageHandler(page) {
-      this.$router.push(`${this.$route.path}?page=${page}`);
+      this.page = +routePage;
     }
   }
-};
+
+  async setupPlanets() {
+    this.loading = true;
+    try {
+      const [planetsCount, planetsPerPage] = await this.getPlanetsInfo();
+      this.planetsCount = planetsCount;
+      this.pageCount = Math.ceil(this.planetsCount / +this.pageSize);
+      const startPlanet = (this.page - 1) * +this.pageSize + 1;
+
+      this.planets = await this.getPlanets({
+        planetsPerPage,
+        planetsCount,
+        startPlanet,
+        limit: +this.pageSize
+      });
+    } catch {}
+    this.loading = false;
+  }
+
+  changePageHandler(page: number) {
+    this.$router.push(`${this.$route.path}?page=${page}`);
+  }
+
+  @Watch("pageSize")
+  async pageSizeChanged(newValue: string | number, oldValue: string | number) {
+    if (oldValue === newValue) return;
+
+    this.errors.pageSize = !(
+      /^\d+$/.test(newValue.toString()) &&
+      +newValue > 0 &&
+      +newValue <= this.planetsCount
+    );
+    if (!this.errors.pageSize) {
+      localStorage.setItem("pageSize", this.pageSize.toString());
+      await this.setupPlanets();
+    }
+  }
+
+  @Action("getPlanetsInfo")
+  getPlanetsInfo!: () => Promise<[number, number]>;
+  @Action("getPlanets") getPlanets!: (
+    settings: IGetPlanetsSettings
+  ) => Promise<IPlanet[]>;
+}
 </script>
 <style lang="scss" scoped>
 $error: red;

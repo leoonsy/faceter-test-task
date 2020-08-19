@@ -37,35 +37,37 @@
       </ul>
     </div>
     <div v-else class="planet__not-found">
-      <h3>Not found.</h3>
+      <h3>Planet not found.</h3>
     </div>
   </section>
 </template>
 
-<script>
-import { mapActions } from "vuex";
-import Loader from "@/components/Loader";
+<script lang="ts">
+import Loader from "@/components/Loader.vue";
+import { Vue, Component } from "vue-property-decorator";
+// eslint-disable-next-line no-unused-vars
+import { IPlanet } from "@/api/types";
+import { Action } from "vuex-class";
 
-export default {
-  name: "Planet",
-  components: { Loader },
-  data() {
-    return {
-      loading: true,
-      planet: null
-    };
-  },
+@Component({
+  components: {
+    Loader
+  }
+})
+export default class Planet extends Vue {
+  loading: boolean = true;
+  planet: IPlanet | null = null;
+
   async created() {
     try {
-      this.planet = await this.getPlanetById(this.$route.params.id);
+      this.planet = await this.getPlanetById(+this.$route.params.id);
     } catch (e) {}
 
     this.loading = false;
-  },
-  methods: {
-    ...mapActions(["getPlanetById"])
   }
-};
+
+  @Action("getPlanetById") getPlanetById!: (id: number) => Promise<IPlanet>;
+}
 </script>
 <style lang="scss" scoped>
 .planet {

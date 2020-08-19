@@ -25,21 +25,18 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "Planet",
-  props: {
-    planet: {
-      type: Object,
-      required: true
-    }
-  },
-  computed: {
-    planetId: function() {
-      return this.planet.url.split("/").slice(-2, -1)[0];
-    }
+<script lang="ts">
+import { Vue, Component, Prop } from "vue-property-decorator";
+// eslint-disable-next-line no-unused-vars
+import { IPlanet } from "@/api/types";
+
+@Component
+export default class Planet extends Vue {
+  @Prop({ required: true }) readonly planet!: IPlanet;
+  get planetId() {
+    return this.planet.url.split("/").slice(-2, -1)[0];
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .planet {

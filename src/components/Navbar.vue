@@ -17,16 +17,13 @@
   </nav>
 </template>
 
-<script>
-export default {
-  name: "Navbar",
-  props: {
-    links: {
-      type: Array,
-      required: true
-    }
-  }
-};
+<script lang="ts">
+import { Vue, Component, Prop } from "vue-property-decorator";
+
+@Component
+export default class Navbar extends Vue {
+  @Prop({ required: true }) readonly links!: object[];
+}
 </script>
 
 <style lang="scss" scoped>

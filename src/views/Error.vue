@@ -6,24 +6,24 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: "Error",
-  computed: {
-    message() {
-      let results = {
-        "403": "Access error",
-        "404": "Page not found",
-        "500": "Internal server error"
-      };
+<script lang="ts">
+import { Vue, Component } from "vue-property-decorator";
 
-      let code = this.$route.params.code;
-      if (!code || !results[code]) return results["404"];
+@Component
+export default class Error extends Vue {
+  get message() {
+    let results: any = {
+      "403": "Access error",
+      "404": "Page not found",
+      "500": "Internal server error"
+    };
 
-      return results[code];
-    }
+    let code = this.$route.params.code;
+    if (!code || !results[code]) return results["404"];
+
+    return results[code];
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

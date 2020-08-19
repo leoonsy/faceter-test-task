@@ -19,28 +19,33 @@
   </section>
 </template>
 
-<script>
-import { mapActions } from "vuex";
-import Loader from "@/components/Loader";
+<script lang="ts">
+import Loader from "@/components/Loader.vue";
+import { Vue, Component } from "vue-property-decorator";
+import { Action } from "vuex-class";
+// eslint-disable-next-line no-unused-vars
+import { IStatistics } from "@/api/types";
 
-export default {
-  name: "Statistics",
-  components: { Loader },
-  data: () => ({
-    statistics: [],
-    loading: true
-  }),
+@Component({
+  components: {
+    Loader
+  }
+})
+export default class Statistics extends Vue {
+  statistics: IStatistics = [];
+  loading = true;
+
   async created() {
     try {
       this.statistics = await this.getStatistics();
     } catch {}
 
     this.loading = false;
-  },
-  methods: {
-    ...mapActions(["getStatistics"])
   }
-};
+
+  @Action("getStatistics")
+  getStatistics!: () => Promise<IStatistics>;
+}
 </script>
 
 <style lang="scss">

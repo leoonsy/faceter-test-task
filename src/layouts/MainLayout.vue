@@ -11,43 +11,40 @@
     </footer>
   </div>
 </template>
-<script>
-import NavBar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-
-export default {
-  name: "MainLayout",
-  data: () => ({
-    links: [
-      {
-        name: "planets",
-        title: "Planets"
-      },
-      {
-        name: "statistics",
-        title: "Statistics"
-      }
-    ]
-  }),
+<script lang="ts">
+import NavBar from "@/components/Navbar.vue";
+import Footer from "@/components/Footer.vue";
+import { Vue, Component, Watch } from "vue-property-decorator";
+import { State } from "vuex-class";
+@Component({
   components: {
     NavBar,
     Footer
-  },
-  computed: {
-    error() {
-      return this.$store.getters.error;
-    }
-  },
-  watch: {
-    error() {
-      this.$toasted.show("An error has occurred", {
-        theme: "toasted-primary",
-        position: "top-right",
-        duration: 5000
-      });
-    }
   }
-};
+})
+export default class MainLayout extends Vue {
+  links = [
+    {
+      name: "planets",
+      title: "Planets"
+    },
+    {
+      name: "statistics",
+      title: "Statistics"
+    }
+  ];
+
+  @State(state => state.info.error) error: any;
+
+  @Watch("error")
+  onError() {
+    this.$toasted.show("An error has occurred", {
+      theme: "toasted-primary",
+      position: "top-right",
+      duration: 5000
+    });
+  }
+}
 </script>
 <style lang="scss" scoped>
 .wrapper {

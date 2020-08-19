@@ -15,9 +15,8 @@ export interface IPlanet {
   terrain: string;
   surface_water: number;
   population: number;
+  url: string;
 }
-
-export interface IPlanets extends Array<IPlanet> {}
 
 export interface IStatistics {
   [index: number]: {
