@@ -4,7 +4,7 @@ import { IGetPlanetsSettings, IPlanet, IStatistics } from "./types";
 
 class SWApi {
   public static async getPlanetById(id: number) {
-    return (await HTTP.get(`planets/${id}`)).data as IPlanet;
+    return (await HTTP.get(`planets/${id}/`)).data as IPlanet;
   }
 
   public static async getPlanets({
