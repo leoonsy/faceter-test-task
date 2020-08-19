@@ -9,7 +9,14 @@
 <script lang="ts">
 import { Vue, Component, Watch } from "vue-property-decorator";
 import { State } from "vuex-class";
-@Component
+@Component({
+  metaInfo() {
+    return {
+      title: "Main",
+      titleTemplate: "%s · Faceter test"
+    };
+  }
+})
 export default class App extends Vue {
   @State(state => state.info.routeLoading) routeLoading!: boolean;
   $Progress: any;

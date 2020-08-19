@@ -73,6 +73,11 @@ import { Route } from "vue-router";
     this.setupPlanets();
 
     next();
+  },
+  metaInfo() {
+    return {
+      title: "Planets"
+    };
   }
 })
 export default class Planets extends Vue {
@@ -85,6 +90,9 @@ export default class Planets extends Vue {
     pageSize: false
   };
   pageCount!: number;
+  metaInfo = {
+    title: "About Us"
+  };
 
   created() {
     this.setupPage(this.$route);

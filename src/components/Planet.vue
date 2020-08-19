@@ -11,7 +11,7 @@
         <strong>Climate: </strong><span>{{ planet.climate }}</span>
       </li>
       <li class="planet__item">
-        <strong>Diameter: </strong><span>{{ planet.diameter }}</span>
+        <strong>Diameter: </strong><span>{{ planet.diameter }} km</span>
       </li>
     </ul>
     <span class="planet__more">...</span>

@@ -14,15 +14,15 @@
           <strong>Climate: </strong><span>{{ planet.climate }}</span>
         </li>
         <li class="planet__item">
-          <strong>Diameter: </strong><span>{{ planet.diameter }}</span>
+          <strong>Diameter: </strong><span>{{ planet.diameter }} km</span>
         </li>
         <li class="planet__item">
           <strong>Rotation period: </strong
-          ><span>{{ planet.rotation_period }}</span>
+          ><span>{{ planet.rotation_period }} hours</span>
         </li>
         <li class="planet__item">
           <strong>Orbital period: </strong
-          ><span>{{ planet.orbital_period }}</span>
+          ><span>{{ planet.orbital_period }} days</span>
         </li>
         <li class="planet__item">
           <strong>Gravity: </strong><span>{{ planet.gravity }}</span>
@@ -32,7 +32,7 @@
         </li>
         <li class="planet__item">
           <strong>Surface water : </strong
-          ><span>{{ planet.surface_water }}</span>
+          ><span>{{ planet.surface_water }}%</span>
         </li>
       </ul>
     </div>
@@ -53,6 +53,11 @@ import { Action } from "vuex-class";
 @Component({
   components: {
     Loader
+  },
+  metaInfo(this: Planet) {
+    return {
+      title: this.loading ? "Loading..." : this.planet!.name
+    };
   }
 })
 export default class Planet extends Vue {

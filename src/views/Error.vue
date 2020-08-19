@@ -8,8 +8,15 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
+import Planet from "@/views/Planet.vue";
 
-@Component
+@Component({
+  metaInfo() {
+    return {
+      title: "Error"
+    };
+  }
+})
 export default class Error extends Vue {
   get message() {
     let results: any = {

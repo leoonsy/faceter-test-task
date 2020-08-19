@@ -5,7 +5,9 @@ import store from "./store";
 import "@/assets/styles/main.scss";
 import VueProgressBar from "vue-progressbar";
 import Toasted from "vue-toasted";
+import VueMeta from "vue-meta";
 
+Vue.use(VueMeta);
 Vue.use(Toasted);
 Vue.use(VueProgressBar, {
   color: "rgb(53,120,255)",

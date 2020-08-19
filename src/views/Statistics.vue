@@ -24,10 +24,16 @@ import Loader from "@/components/Loader.vue";
 import { Vue, Component } from "vue-property-decorator";
 import { Action } from "vuex-class";
 import { IStatistics } from "@/api/types";
+import Planet from "@/views/Planet.vue";
 
 @Component({
   components: {
     Loader
+  },
+  metaInfo(this: Planet) {
+    return {
+      title: "Statistics"
+    };
   }
 })
 export default class Statistics extends Vue {
