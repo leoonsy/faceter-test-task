@@ -1,4 +1,5 @@
 import HTTP from "../libs/http-common";
+// eslint-disable-next-line no-unused-vars
 import { IGetPlanetsSettings, IPlanet, IStatistics } from "./types";
 
 class SWApi {

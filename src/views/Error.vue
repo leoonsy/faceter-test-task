@@ -8,7 +8,6 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import Planet from "@/views/Planet.vue";
 
 @Component({
   metaInfo() {

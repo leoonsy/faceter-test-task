@@ -60,6 +60,7 @@ import { Vue, Component, Watch } from "vue-property-decorator";
 import { Action } from "vuex-class";
 // eslint-disable-next-line no-unused-vars
 import { IGetPlanetsSettings, IPlanet } from "@/api/types";
+// eslint-disable-next-line no-unused-vars
 import { Route } from "vue-router";
 
 @Component({
