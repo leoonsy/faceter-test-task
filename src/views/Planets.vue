@@ -34,14 +34,7 @@
             :click-handler="changePageHandler"
             :prev-text="'Prev'"
             :next-text="'Next'"
-            :container-class="[
-              'pagination',
-              isSmallScreen
-                ? 'pagination-sm'
-                : isMediumScreen
-                ? 'pagination-md'
-                : 'pagination-lg'
-            ]"
+            :container-class="'pagination'"
             :page-class="'page-item'"
             :page-link-class="'page-link'"
             :prev-class="'page-item'"
@@ -98,8 +91,6 @@ export default class Planets extends Vue {
     pageSize: false
   };
   pageCount!: number;
-  isSmallScreen = document.documentElement.clientWidth < 336;
-  isMediumScreen = document.documentElement.clientWidth < 500;
   metaInfo = {
     title: "About Us"
   };
@@ -233,5 +224,27 @@ $error: red;
 
 .pagination {
   margin: 50px 0 0;
+}
+
+.pagination {
+  ::v-deep .page-link {
+    padding: 0.85rem 1.5rem;
+    font-size: 1.25rem;
+
+    @media (max-width: 622px) {
+      padding: 0.65rem 1.2rem;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 450px) {
+      padding: 0.55rem 0.8rem;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 330px) {
+      padding: 0.3rem 0.45rem;
+      font-size: 1rem;
+    }
+  }
 }
 </style>
