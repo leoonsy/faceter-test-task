@@ -38,7 +38,7 @@ class SWApi {
         const index = statisticsIndex++;
         const count = (
           await HTTP({
-            url: rootPosts[name],
+            url: rootPosts[name].replace("http://", "https://"),
             baseURL: ""
           })
         ).data.count;
