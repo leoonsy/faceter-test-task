@@ -9,6 +9,4 @@ const HTTP = axios.create({
   headers
 });
 
-console.log(3);
-
 export default HTTP;

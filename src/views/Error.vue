@@ -18,8 +18,7 @@ export default {
       };
 
       let code = this.$route.params.code;
-      if (!code || !results.[code])
-        return results['404'];
+      if (!code || !results[code]) return results["404"];
 
       return results[code];
     }

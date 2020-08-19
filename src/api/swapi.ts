@@ -1,26 +1,27 @@
-import HTTP from "./http-common";
+import HTTP from "../libs/http-common";
+import { IGetPlanetsSettings, IPlanet, IPlanets, IStatistics } from "./types";
 
 class SWApi {
-  static async getPlanetById(id) {
-    try {
-      return (await HTTP.get(`planets/${id}`)).data;
-    } catch (e) {
-      if (e.response && e.response.status === 404) return null;
-      else throw e;
-    }
+  static async getPlanetById(id: number) {
+    return (await HTTP.get(`planets/${id}`)).data as IPlanet;
   }
 
-  static async getPlanets(planetsPerPage, planetsCount, startPlanet, limit) {
-    return this._getLimitedPaginatedPosts({
-      postsName: "planets",
-      postsPerPage: planetsPerPage,
-      postsCount: planetsCount,
-      startPost: startPlanet,
+  static async getPlanets({
+    planetsPerPage,
+    planetsCount,
+    startPlanet,
+    limit
+  }: IGetPlanetsSettings) {
+    return (await this._getLimitedPaginatedPosts(
+      "planets",
+      planetsPerPage,
+      planetsCount,
+      startPlanet,
       limit
-    });
+    )) as IPlanets;
   }
 
-  static async getPlanetsInfo() {
+  static async getPlanetsInfo(): Promise<[number, number]> {
     const planetsInfo = (await HTTP.get("planets/")).data;
     return [planetsInfo.count, planetsInfo.results.length];
   }
@@ -28,7 +29,7 @@ class SWApi {
   static async getStatistics() {
     const rootPosts = (await HTTP.get("")).data;
     const postNames = Object.keys(rootPosts);
-    let statistics = new Array(postNames.length);
+    let statistics: IStatistics = new Array(postNames.length);
     let statisticsIndex = 0;
 
     await Promise.all(
@@ -51,13 +52,13 @@ class SWApi {
     return statistics;
   }
 
-  static async _getLimitedPaginatedPosts({
-    postsName,
-    postsPerPage,
-    postsCount,
-    startPost,
-    limit
-  }) {
+  static async _getLimitedPaginatedPosts(
+    postsName: string,
+    postsPerPage: number,
+    postsCount: number,
+    startPost: number,
+    limit: number
+  ) {
     const end = startPost + limit - 1;
     const startPage = (((startPost - 1) / postsPerPage) | 0) + 1;
     const endPage = (((end - 1) / postsPerPage) | 0) + 1;
@@ -65,7 +66,7 @@ class SWApi {
 
     const hasErrorEnd = end > postsCount;
 
-    let postsByPage = [];
+    let postsByPage = [] as any[];
 
     for (let pageNumber = startPage; pageNumber <= endPage; pageNumber++) {
       const response = (await HTTP.get(`${postsName}/?page=${pageNumber}`))

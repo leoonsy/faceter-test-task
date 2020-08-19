@@ -7,7 +7,6 @@ import VueProgressBar from "vue-progressbar";
 import Toasted from "vue-toasted";
 
 Vue.use(Toasted);
-
 Vue.use(VueProgressBar, {
   color: "rgb(53,120,255)",
   failedColor: "red",
