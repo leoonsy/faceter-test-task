@@ -34,7 +34,14 @@
             :click-handler="changePageHandler"
             :prev-text="'Prev'"
             :next-text="'Next'"
-            :container-class="'pagination pagination-lg'"
+            :container-class="[
+              'pagination',
+              isSmallScreen
+                ? 'pagination-sm'
+                : isMediumScreen
+                ? 'pagination-md'
+                : 'pagination-lg'
+            ]"
             :page-class="'page-item'"
             :page-link-class="'page-link'"
             :prev-class="'page-item'"
@@ -91,6 +98,8 @@ export default class Planets extends Vue {
     pageSize: false
   };
   pageCount!: number;
+  isSmallScreen = document.documentElement.clientWidth < 336;
+  isMediumScreen = document.documentElement.clientWidth < 500;
   metaInfo = {
     title: "About Us"
   };
