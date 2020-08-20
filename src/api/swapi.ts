@@ -67,9 +67,8 @@ class SWApi {
 
   /**
    * Получить номер страницы по переданному номеру записи
-   * @param recordsPerPage количество записей на странице
-   * @param record номер записи
-   * @private
+   * @param recordsPerPage Количество записей на странице
+   * @param record Номер записи
    */
   private static _getPageByRecord(recordsPerPage: number, record: number) {
     return (((record - 1) / recordsPerPage) | 0) + 1;
