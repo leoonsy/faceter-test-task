@@ -69,13 +69,6 @@ import { Route } from "vue-router";
     Planet,
     Paginate
   },
-  beforeRouteUpdate(this: Planets, to: Route, _from: any, next: any) {
-    //при каждом обновлении роута нужно обновлять выводимую страницу и список планет
-    this.setupPage(to);
-    this.setupPlanets();
-
-    next();
-  },
   metaInfo() {
     return {
       title: "Planets"
@@ -105,20 +98,8 @@ export default class Planets extends Vue {
     this.setupPlanets();
   }
 
-  /**
-   * Установить страницу станицу на основе маршрута
-   * @param nextRoute Маршрут, на который переходит пользователь
-   */
   setupPage(nextRoute: Route) {
-    const nextRoutePage = nextRoute.query.page;
-    if (nextRoutePage) {
-      if (!(typeof nextRoutePage === "string" && /^\d+$/.test(nextRoutePage))) {
-        this.$router.push({ name: "error" });
-        return;
-      }
-
-      this.page = +nextRoutePage;
-    } else this.page = 1;
+    this.page = +nextRoute.query.page || 1;
   }
 
   /**
@@ -152,6 +133,12 @@ export default class Planets extends Vue {
    */
   changePageHandler(page: number) {
     this.$router.push(`${this.$route.path}?page=${page}`);
+  }
+
+  @Watch("$route")
+  onRouteChanged(to: Route) {
+    this.setupPage(to);
+    this.setupPlanets();
   }
 
   @Watch("pageSize")

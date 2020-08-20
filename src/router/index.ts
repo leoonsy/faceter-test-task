@@ -1,5 +1,5 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
+import VueRouter, { Route } from "vue-router";
 import MainLayout from "@/layouts/MainLayout.vue";
 import store from "@/store";
 
@@ -18,6 +18,12 @@ const routes = [
       import(/* webpackChunkName: "planets" */ "@/views/Planets.vue"),
     meta: {
       layout: MainLayout
+    },
+    beforeEnter: (to: Route, from: Route, next: any) => {
+      const page = to.query.page;
+      if (page && !(typeof page === "string" && /^\d+$/.test(page))) {
+        next({ name: "error", replace: true });
+      } else next();
     }
   },
   {
@@ -49,11 +55,7 @@ const routes = [
   },
   {
     path: "*",
-    name: "404",
-    meta: {
-      layout: MainLayout
-    },
-    redirect: "error"
+    redirect: { name: "error" }
   }
 ];
 
