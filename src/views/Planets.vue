@@ -59,7 +59,7 @@ import Loader from "@/components/Loader.vue";
 import { Vue, Component, Watch } from "vue-property-decorator";
 import { Action } from "vuex-class";
 // eslint-disable-next-line no-unused-vars
-import { IGetPlanetsSettings, IPlanet } from "@/api/types";
+import { IGetRecordsSettings, IPlanet } from "@/api/types";
 // eslint-disable-next-line no-unused-vars
 import { Route } from "vue-router";
 
@@ -70,6 +70,7 @@ import { Route } from "vue-router";
     Paginate
   },
   beforeRouteUpdate(this: Planets, to: Route, _from: any, next: any) {
+    //при каждом обновлении роута нужно обновлять выводимую страницу и список планет
     this.setupPage(to);
     this.setupPlanets();
 
@@ -84,12 +85,16 @@ import { Route } from "vue-router";
 export default class Planets extends Vue {
   loading = true;
   planets: IPlanet[] = [];
+  // Общее число планет
   planetsCount!: number;
+  // Текущая страница
   page!: number;
+  // Количество выводимых планет на странице
   pageSize: string | number = localStorage.getItem("pageSize") || 5;
   errors = {
     pageSize: false
   };
+  // Количество страниц
   pageCount!: number;
   metaInfo = {
     title: "About Us"
@@ -100,6 +105,10 @@ export default class Planets extends Vue {
     this.setupPlanets();
   }
 
+  /**
+   * Установить страницу станицу на основе маршрута
+   * @param nextRoute Маршрут, на который переходит пользователь
+   */
   setupPage(nextRoute: Route) {
     const nextRoutePage = nextRoute.query.page;
     if (nextRoutePage) {
@@ -112,24 +121,35 @@ export default class Planets extends Vue {
     } else this.page = 1;
   }
 
+  /**
+   * Установить список планет
+   */
   async setupPlanets() {
     this.loading = true;
     try {
+      /*
+      чтобы знать, сколько отображать страниц и делать запросов на сервер, 
+      нужно получить количество всех планет и планет, отдаваемых API за 1 запрос
+       */
       const [planetsCount, planetsPerPage] = await this.getPlanetsInfo();
       this.planetsCount = planetsCount;
       this.pageCount = Math.ceil(this.planetsCount / +this.pageSize);
       const startPlanet = (this.page - 1) * +this.pageSize + 1;
-
       this.planets = await this.getPlanets({
-        planetsPerPage,
-        planetsCount,
-        startPlanet,
+        recordsPerPage: planetsPerPage,
+        recordsCount: planetsCount,
+        startRecord: startPlanet,
         limit: +this.pageSize
       });
     } catch {}
+
     this.loading = false;
   }
 
+  /**
+   * Обработчик изменения текущей страницы с помощью пагинации
+   * @param page Номер страницы
+   */
   changePageHandler(page: number) {
     this.$router.push(`${this.$route.path}?page=${page}`);
   }
@@ -138,6 +158,7 @@ export default class Planets extends Vue {
   async pageSizeChanged(newValue: string | number, oldValue: string | number) {
     if (oldValue === newValue) return;
 
+    //проверка на корректность
     this.errors.pageSize = !(
       /^\d+$/.test(newValue.toString()) &&
       +newValue > 0 &&
@@ -151,8 +172,9 @@ export default class Planets extends Vue {
 
   @Action("getPlanetsInfo")
   getPlanetsInfo!: () => Promise<[number, number]>;
+
   @Action("getPlanets") getPlanets!: (
-    settings: IGetPlanetsSettings
+    settings: IGetRecordsSettings
   ) => Promise<IPlanet[]>;
 }
 </script>

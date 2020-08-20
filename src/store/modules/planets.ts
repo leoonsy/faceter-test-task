@@ -1,10 +1,14 @@
 import { Module, VuexModule, Action } from "vuex-module-decorators";
 import SWApi from "@/api/swapi";
 // eslint-disable-next-line no-unused-vars
-import { IGetPlanetsSettings } from "@/api/types";
+import { IGetRecordsSettings } from "@/api/types";
 
 @Module
 export default class Info extends VuexModule {
+  /**
+   * Получить информацию о планетах
+   * @returns {Promise<[number, number]>} Общее число планет и получаемых за 1 запрос
+   */
   @Action
   public async getPlanetsInfo() {
     try {
@@ -14,16 +18,23 @@ export default class Info extends VuexModule {
       throw e;
     }
   }
+
+  /**
+   * Получить требуемое количество планет
+   */
   @Action
-  public async getPlanets(planetsSettings: IGetPlanetsSettings) {
+  public async getPlanets(planetsSettings: IGetRecordsSettings) {
     try {
       return await SWApi.getPlanets(planetsSettings);
     } catch (e) {
-      //this.context.commit("info/setError", e, { root: true });
       this.context.commit("setError", e);
       throw e;
     }
   }
+
+  /**
+   * Возвращает планету по id
+   */
   @Action
   public async getPlanetById(id: number) {
     try {
@@ -36,6 +47,10 @@ export default class Info extends VuexModule {
       throw e;
     }
   }
+
+  /**
+   * Получить статистику из root
+   */
   @Action
   public async getStatistics() {
     try {

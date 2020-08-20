@@ -33,6 +33,10 @@ import { IPlanet } from "@/api/types";
 @Component
 export default class Planet extends Vue {
   @Prop({ required: true }) readonly planet!: IPlanet;
+
+  /**
+   * Формирует id планеты по ее URL
+   */
   get planetId() {
     return this.planet.url.split("/").slice(-2, -1)[0];
   }
