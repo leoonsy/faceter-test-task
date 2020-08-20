@@ -1,6 +1,7 @@
 {
-  "name": "vue-hh",
+  "name": "vue-faceter",
   "version": "0.1.0",
+  "author": "Yashanovsky Sergey",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
