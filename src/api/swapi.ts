@@ -66,6 +66,16 @@ class SWApi {
   }
 
   /**
+   * Получить номер страницы по переданному номеру записи
+   * @param recordsPerPage количество записей на странице
+   * @param record номер записи
+   * @private
+   */
+  private static _getPageByRecord(recordsPerPage: number, record: number) {
+    return (((record - 1) / recordsPerPage) | 0) + 1;
+  }
+
+  /**
    * Получить определенное количество записей (планет, людей и т.д.), начиная с некоторого номера
    */
   private static async _getLimitedPaginatedRecords({
@@ -75,30 +85,32 @@ class SWApi {
     startRecord,
     limit
   }: IGetRecordsSettings) {
-    const end = startRecord + limit - 1;
-    const startPage = (((startRecord - 1) / recordsPerPage) | 0) + 1;
-    const endPage = (((end - 1) / recordsPerPage) | 0) + 1;
     if (startRecord > recordsCount) return [];
+    const startPage = this._getPageByRecord(recordsPerPage, startRecord);
 
-    const hasErrorEnd = end > recordsCount;
+    let endRecord = startRecord + limit - 1;
+    let endPage;
+    if (endRecord > recordsCount) {
+      endRecord = recordsCount;
+      endPage = this._getPageByRecord(recordsPerPage, endRecord);
+    } else endPage = this._getPageByRecord(recordsPerPage, endRecord);
 
-    let postsByPage = [] as any[];
+    let postsByPage = new Array(endPage - startPage + 1);
 
-    for (let pageNumber = startPage; pageNumber <= endPage; pageNumber++) {
-      const response = (await HTTP.get(`${recordsName}/?page=${pageNumber}`))
-        .data;
-      const post = response.results;
-
-      postsByPage.push(post);
-
-      if (!response.next) break;
-    }
+    await Promise.all(
+      //тут можно было бы lodash range использовать, но из-за 1 применения нет смысла
+      [...postsByPage.keys()].map(async index => {
+        const pageNumber = startPage + index;
+        const response = (await HTTP.get(`${recordsName}/?page=${pageNumber}`))
+          .data;
+        postsByPage[index] = response.results;
+      })
+    );
 
     const posts = [].concat(...postsByPage);
     const startSkip = (startRecord - 1) % recordsPerPage;
-    let endSkip;
-    if (hasErrorEnd) endSkip = 0;
-    else endSkip = (recordsPerPage - (end % recordsPerPage)) % recordsPerPage;
+    const endSkip =
+      (recordsPerPage - (endRecord % recordsPerPage)) % recordsPerPage;
 
     return posts.slice(startSkip, posts.length - endSkip);
   }
