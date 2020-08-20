@@ -34,8 +34,9 @@ export default class Error extends Vue {
 
 <style lang="scss" scoped>
 .error {
-  height: 100%;
   display: flex;
+  flex: 1 0 100%;
+  position: relative;
   align-items: center;
   text-align: center;
 
