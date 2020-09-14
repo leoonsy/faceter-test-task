@@ -8,31 +8,36 @@
       <div class="planet__characters">Characters</div>
       <ul class="planet__list">
         <li class="planet__item">
-          <strong>Population: </strong><span>{{ planet.population }}</span>
+          <strong>Population: </strong>
+          <span>{{ planet.population }}</span>
         </li>
         <li class="planet__item">
-          <strong>Climate: </strong><span>{{ planet.climate }}</span>
+          <strong>Climate: </strong>
+          <span>{{ planet.climate }}</span>
         </li>
         <li class="planet__item">
-          <strong>Diameter: </strong><span>{{ planet.diameter }} km</span>
+          <strong>Diameter: </strong>
+          <span>{{ planet.diameter }} km</span>
         </li>
         <li class="planet__item">
-          <strong>Rotation period: </strong
-          ><span>{{ planet.rotation_period }} hours</span>
+          <strong>Rotation period: </strong>
+          <span>{{ planet.rotation_period }} hours</span>
         </li>
         <li class="planet__item">
-          <strong>Orbital period: </strong
-          ><span>{{ planet.orbital_period }} days</span>
+          <strong>Orbital period: </strong>
+          <span>{{ planet.orbital_period }} days</span>
         </li>
         <li class="planet__item">
-          <strong>Gravity: </strong><span>{{ planet.gravity }}</span>
+          <strong>Gravity: </strong>
+          <span>{{ planet.gravity }}</span>
         </li>
         <li class="planet__item">
-          <strong>terrain: </strong><span>{{ planet.terrain }}</span>
+          <strong>terrain: </strong>
+          <span>{{ planet.terrain }}</span>
         </li>
         <li class="planet__item">
-          <strong>Surface water: </strong
-          ><span>{{ planet.surface_water }}%</span>
+          <strong>Surface water: </strong>
+          <span>{{ planet.surface_water }}%</span>
         </li>
       </ul>
     </div>

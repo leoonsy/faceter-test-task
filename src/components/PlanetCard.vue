@@ -5,13 +5,16 @@
     </h2>
     <ul class="planetCard__list">
       <li class="planetCard__item">
-        <strong>Population: </strong><span>{{ planet.population }}</span>
+        <strong>Population: </strong>
+        <span>{{ planet.population }}</span>
       </li>
       <li class="planetCard__item">
-        <strong>Climate: </strong><span>{{ planet.climate }}</span>
+        <strong>Climate: </strong>
+        <span>{{ planet.climate }}</span>
       </li>
       <li class="planetCard__item">
-        <strong>Diameter: </strong><span>{{ planet.diameter }} km</span>
+        <strong>Diameter: </strong>
+        <span>{{ planet.diameter }} km</span>
       </li>
     </ul>
     <span class="planetCard__more">...</span>
