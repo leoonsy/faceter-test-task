@@ -31,7 +31,7 @@
           <strong>terrain: </strong><span>{{ planet.terrain }}</span>
         </li>
         <li class="planet__item">
-          <strong>Surface water : </strong
+          <strong>Surface water: </strong
           ><span>{{ planet.surface_water }}%</span>
         </li>
       </ul>
