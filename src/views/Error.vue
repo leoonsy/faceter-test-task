@@ -7,32 +7,32 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component } from 'vue-property-decorator';
 
 @Component({
   metaInfo() {
     return {
-      title: "Error"
+      title: 'Error'
     };
   }
 })
 export default class Error extends Vue {
   get message() {
     let results: any = {
-      "403": "Access error",
-      "404": "Page not found",
-      "500": "Internal server error"
+      '403': 'Access error',
+      '404': 'Page not found',
+      '500': 'Internal server error'
     };
 
     let code = this.$route.params.code;
-    if (!code || !results[code]) return results["404"];
+    if (!code || !results[code]) return results['404'];
 
     return results[code];
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .error {
   display: flex;
   flex: 1 0 100%;

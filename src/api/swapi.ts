@@ -1,6 +1,5 @@
-import HTTP from "@/libs/http-common";
-// eslint-disable-next-line no-unused-vars
-import { IGetRecordsSettings, IPlanet, IStatistics } from "./types";
+import HTTP from '@/libs/http-common';
+import { IGetRecordsSettings, IPlanet, IStatistics } from './types';
 
 class SWApi {
   /**
@@ -20,7 +19,7 @@ class SWApi {
     limit
   }: IGetRecordsSettings) {
     return (await this._getLimitedPaginatedRecords({
-      recordsName: "planets",
+      recordsName: 'planets',
       recordsPerPage,
       recordsCount,
       startRecord,
@@ -33,7 +32,7 @@ class SWApi {
    * @returns {Promise<[number, number]>} Общее число планет и получаемых за 1 запрос
    */
   public static async getPlanetsInfo(): Promise<[number, number]> {
-    const planetsInfo = (await HTTP.get("planets/")).data;
+    const planetsInfo = (await HTTP.get('planets/')).data;
     return [planetsInfo.count, planetsInfo.results.length];
   }
 
@@ -41,7 +40,7 @@ class SWApi {
    * Получить статистику из root
    */
   public static async getStatistics() {
-    const rootPosts = (await HTTP.get("")).data;
+    const rootPosts = (await HTTP.get('')).data;
     const postNames = Object.keys(rootPosts);
     let statistics: IStatistics = new Array(postNames.length);
 
@@ -50,8 +49,8 @@ class SWApi {
       postNames.map(async (name, index) => {
         const count = (
           await HTTP({
-            url: rootPosts[name].replace("http://", "https://"),
-            baseURL: ""
+            url: rootPosts[name].replace('http://', 'https://'),
+            baseURL: ''
           })
         ).data.count;
 
@@ -91,8 +90,8 @@ class SWApi {
     let endPage;
     if (endRecord > recordsCount) {
       endRecord = recordsCount;
-      endPage = this._getPageByRecord(recordsPerPage, endRecord);
-    } else endPage = this._getPageByRecord(recordsPerPage, endRecord);
+    }
+    endPage = this._getPageByRecord(recordsPerPage, endRecord);
 
     let postsByPage = new Array(endPage - startPage + 1);
 
@@ -106,7 +105,7 @@ class SWApi {
       })
     );
 
-    const posts = [].concat(...postsByPage);
+    const posts = [].concat(...postsByPage) as object[];
     const startSkip = (startRecord - 1) % recordsPerPage;
     const endSkip =
       (recordsPerPage - (endRecord % recordsPerPage)) % recordsPerPage;

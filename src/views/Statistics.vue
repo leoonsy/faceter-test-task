@@ -20,13 +20,11 @@
 </template>
 
 <script lang="ts">
-import Loader from "@/components/Loader.vue";
-import { Vue, Component } from "vue-property-decorator";
-import { Action } from "vuex-class";
-// eslint-disable-next-line no-unused-vars
-import { IStatistics } from "@/api/types";
-// eslint-disable-next-line no-unused-vars
-import Planet from "@/views/Planet.vue";
+import Loader from '@/components/Loader.vue';
+import { Vue, Component } from 'vue-property-decorator';
+import { Action } from 'vuex-class';
+import { IStatistics } from '@/api/types';
+import Planet from '@/views/Planet.vue';
 
 @Component({
   components: {
@@ -34,7 +32,7 @@ import Planet from "@/views/Planet.vue";
   },
   metaInfo(this: Planet) {
     return {
-      title: "Statistics"
+      title: 'Statistics'
     };
   }
 })
@@ -50,7 +48,7 @@ export default class Statistics extends Vue {
     this.loading = false;
   }
 
-  @Action("getStatistics")
+  @Action('getStatistics')
   getStatistics!: () => Promise<IStatistics>;
 }
 </script>

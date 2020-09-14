@@ -7,13 +7,13 @@
 </template>
 
 <script>
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component } from 'vue-property-decorator';
 
 @Component
 export default class Footer extends Vue {}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 $footer-bg: #404040;
 .footer {
   background-color: $footer-bg;

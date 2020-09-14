@@ -23,7 +23,7 @@
           v-for="planet of planets"
           :key="planet.name"
         >
-          <Planet class="planets__item" :planet="planet" />
+          <PlanetCard class="planets__item" :planet="planet" />
         </div>
       </div>
       <div class="row">
@@ -53,25 +53,23 @@
 </template>
 
 <script lang="ts">
-import Planet from "@/components/Planet.vue";
-import Paginate from "vuejs-paginate";
-import Loader from "@/components/Loader.vue";
-import { Vue, Component, Watch } from "vue-property-decorator";
-import { Action } from "vuex-class";
-// eslint-disable-next-line no-unused-vars
-import { IGetRecordsSettings, IPlanet } from "@/api/types";
-// eslint-disable-next-line no-unused-vars
-import { Route } from "vue-router";
+import PlanetCard from '@/components/PlanetCard.vue';
+import Paginate from 'vuejs-paginate';
+import Loader from '@/components/Loader.vue';
+import { Vue, Component, Watch } from 'vue-property-decorator';
+import { Action } from 'vuex-class';
+import { IGetRecordsSettings, IPlanet } from '@/api/types';
+import { Route } from 'vue-router';
 
 @Component({
   components: {
     Loader,
-    Planet,
+    PlanetCard,
     Paginate
   },
   metaInfo() {
     return {
-      title: "Planets"
+      title: 'Planets'
     };
   }
 })
@@ -79,18 +77,18 @@ export default class Planets extends Vue {
   loading = true;
   planets: IPlanet[] = [];
   // Общее число планет
-  planetsCount!: number;
+  planetsCount: number = 0;
   // Текущая страница
-  page!: number;
+  page: number = 1;
   // Количество выводимых планет на странице
-  pageSize: string | number = localStorage.getItem("pageSize") || 5;
+  pageSize: string | number = localStorage.getItem('pageSize') || 5;
   errors = {
     pageSize: false
   };
   // Количество страниц
   pageCount!: number;
   metaInfo = {
-    title: "About Us"
+    title: 'About Us'
   };
 
   created() {
@@ -135,13 +133,13 @@ export default class Planets extends Vue {
     this.$router.push(`${this.$route.path}?page=${page}`);
   }
 
-  @Watch("$route")
+  @Watch('$route')
   onRouteChanged(to: Route) {
     this.setupPage(to);
     this.setupPlanets();
   }
 
-  @Watch("pageSize")
+  @Watch('pageSize')
   async pageSizeChanged(newValue: string | number, oldValue: string | number) {
     if (oldValue === newValue) return;
 
@@ -152,20 +150,20 @@ export default class Planets extends Vue {
       +newValue <= this.planetsCount
     );
     if (!this.errors.pageSize) {
-      localStorage.setItem("pageSize", this.pageSize.toString());
+      localStorage.setItem('pageSize', this.pageSize.toString());
       await this.setupPlanets();
     }
   }
 
-  @Action("getPlanetsInfo")
+  @Action('getPlanetsInfo')
   getPlanetsInfo!: () => Promise<[number, number]>;
 
-  @Action("getPlanets") getPlanets!: (
+  @Action('getPlanets') getPlanets!: (
     settings: IGetRecordsSettings
   ) => Promise<IPlanet[]>;
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 $error: red;
 
 .planets {
@@ -236,7 +234,7 @@ $error: red;
 }
 
 .pagination {
-  ::v-deep .page-link {
+  .page-link {
     padding: 0.85rem 1.5rem;
     font-size: 1.25rem;
 

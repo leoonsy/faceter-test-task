@@ -43,12 +43,10 @@
 </template>
 
 <script lang="ts">
-import Loader from "@/components/Loader.vue";
-import { Vue, Component } from "vue-property-decorator";
-
-// eslint-disable-next-line no-unused-vars
-import { IPlanet } from "@/api/types";
-import { Action } from "vuex-class";
+import Loader from '@/components/Loader.vue';
+import { Vue, Component } from 'vue-property-decorator';
+import { IPlanet } from '@/api/types';
+import { Action } from 'vuex-class';
 
 @Component({
   components: {
@@ -56,7 +54,7 @@ import { Action } from "vuex-class";
   },
   metaInfo(this: Planet) {
     return {
-      title: this.loading ? "Loading..." : this.planet!.name
+      title: this.loading ? 'Loading...' : this.planet!.name
     };
   }
 })
@@ -72,10 +70,10 @@ export default class Planet extends Vue {
     this.loading = false;
   }
 
-  @Action("getPlanetById") getPlanetById!: (id: number) => Promise<IPlanet>;
+  @Action('getPlanetById') getPlanetById!: (id: number) => Promise<IPlanet>;
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .planet {
   margin: 40px 0;
   flex: 1 0 100%;

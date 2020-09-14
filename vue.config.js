@@ -9,7 +9,7 @@ module.exports = {
     }
   },
   configureWebpack: {
-    devtool: "source-map"
+    devtool: 'source-map'
   },
-  productionSourceMap: process.env.NODE_ENV !== "production"
+  productionSourceMap: process.env.NODE_ENV !== 'production'
 };

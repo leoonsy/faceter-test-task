@@ -1,7 +1,6 @@
-import { Module, VuexModule, Action } from "vuex-module-decorators";
-import SWApi from "@/api/swapi";
-// eslint-disable-next-line no-unused-vars
-import { IGetRecordsSettings } from "@/api/types";
+import { Module, VuexModule, Action } from 'vuex-module-decorators';
+import SWApi from '@/api/swapi';
+import { IGetRecordsSettings } from '@/api/types';
 
 @Module
 export default class Info extends VuexModule {
@@ -14,7 +13,7 @@ export default class Info extends VuexModule {
     try {
       return await SWApi.getPlanetsInfo();
     } catch (e) {
-      this.context.commit("setError", e);
+      this.context.commit('setError', e);
       throw e;
     }
   }
@@ -27,7 +26,7 @@ export default class Info extends VuexModule {
     try {
       return await SWApi.getPlanets(planetsSettings);
     } catch (e) {
-      this.context.commit("setError", e);
+      this.context.commit('setError', e);
       throw e;
     }
   }
@@ -43,7 +42,7 @@ export default class Info extends VuexModule {
       if (e.response && e.response.status === 404) {
         return null;
       }
-      this.context.commit("setError", e);
+      this.context.commit('setError', e);
       throw e;
     }
   }
@@ -56,7 +55,7 @@ export default class Info extends VuexModule {
     try {
       return await SWApi.getStatistics();
     } catch (e) {
-      this.context.commit("setError", e);
+      this.context.commit('setError', e);
       throw e;
     }
   }

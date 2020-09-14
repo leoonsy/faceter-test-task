@@ -7,13 +7,13 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Watch } from "vue-property-decorator";
-import { State } from "vuex-class";
+import { Vue, Component, Watch } from 'vue-property-decorator';
+import { State } from 'vuex-class';
 @Component({
   metaInfo() {
     return {
-      title: "Main",
-      titleTemplate: "%s · Faceter test"
+      title: 'Main',
+      titleTemplate: '%s · Faceter test'
     };
   }
 })
@@ -22,7 +22,7 @@ export default class App extends Vue {
   $Progress: any;
 
   //при каждом изменении роута показывать или скрывать прогресс бар
-  @Watch("routeLoading")
+  @Watch('routeLoading')
   onRouteLoading(newValue: boolean) {
     if (newValue) this.$Progress.start();
     else this.$Progress.finish();

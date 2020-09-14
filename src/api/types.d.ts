@@ -28,6 +28,6 @@ export interface IPlanet {
 export interface IStatistics {
   [index: number]: {
     name: string;
-    count: string;
+    count: number;
   };
 }

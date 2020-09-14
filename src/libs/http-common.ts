@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 
 const headers = {
-  Accept: "application/json"
+  Accept: 'application/json'
 };
 
 const HTTP = axios.create({

@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Component, Prop } from 'vue-property-decorator';
 
 @Component
 export default class Navbar extends Vue {
@@ -26,7 +26,7 @@ export default class Navbar extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 $menu-bg: #333;
 $hover-link-color: #c4c4c4;
 $active-link-color: $primary;

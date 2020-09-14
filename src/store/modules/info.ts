@@ -1,4 +1,4 @@
-import { Module, VuexModule, Mutation } from "vuex-module-decorators";
+import { Module, VuexModule, Mutation } from 'vuex-module-decorators';
 
 @Module
 export default class Info extends VuexModule {

@@ -7,12 +7,12 @@
 </template>
 
 <script>
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component } from 'vue-property-decorator';
 
 @Component
 export default class Loader extends Vue {}
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .spinner-border {
   width: 60px;
   height: 60px;
