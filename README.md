@@ -1,6 +1,7 @@
 Тестовое задание в компанию Faceter на позицию стажера
 =============================
 Vue.js + Typescript + ESLint + Bootstrap grid
+
 https://faceter-yasha.netlify.app
 
 ## Установка проекта
